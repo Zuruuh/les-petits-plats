@@ -1,0 +1,92 @@
+#filters {
+  min-height: 3.5rem;
+  position: absolute;
+  z-index: 1;
+}
+
+.filter-input {
+  background-color: var(--color);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  position: relative;
+  height: fit-content;
+
+  .filter-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    input {
+      visibility: hidden;
+      display: none;
+      color: #fff;
+      outline: 0;
+      flex: 1;
+
+      &::placeholder {
+        color: #fff;
+        opacity: 0.5;
+      }
+    }
+
+    label {
+      color: #fff;
+    }
+
+    i {
+      color: #fff;
+      margin-left: 1rem;
+    }
+  }
+
+  .filter-content {
+    &,
+    * {
+      display: none;
+      visibility: hidden;
+
+      border: 0;
+      background-color: transparent;
+      color: #fff;
+    }
+  }
+
+  &:focus-within {
+    .filter-controls {
+      label {
+        visibility: hidden;
+        display: none;
+      }
+
+      input {
+        background-color: transparent;
+        border: 0;
+        visibility: visible;
+        display: block;
+      }
+
+      i {
+        rotate: 180deg;
+      }
+    }
+
+    .filter-content {
+      visibility: visible;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      * {
+        display: block;
+        visibility: visible;
+        width: 8rem;
+        text-align: left;
+      }
+    }
+  }
+
+  &:nth-child(n + 2) {
+    margin-left: 1rem;
+  }
+}

@@ -1,0 +1,26 @@
+name: Lint styles & scripts
+on: [push, pull_request]
+
+jobs:
+  lint-source:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment ✅
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: 16
+
+      - name: Install dependencies 🔧
+        run: npm i -g yarn && yarn install --frozen-lockfile
+
+      - name: Run eslint ✨
+        run: node_modules/eslint/bin/eslint.js ./
+
+      - name: Run prettier ✨
+        run: node_modules/prettier/bin-prettier.js -c ./
+
+      - name: Run stylelint ✨
+        run: node_modules/stylelint/bin/stylelint.js ./**/*.scss

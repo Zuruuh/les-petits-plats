@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Les Petits Plats</title>
+    <link rel="stylesheet" href="/src/styles/styles.scss" type="text/css" />
+    <script type="module" src="/src/app.ts"></script>
+  </head>
+  <body>
+    <main id="app" class="container-xl vw-100 px-5">
+      <div id="logo" class="d-flex flex-column align-items-center mt-3">
+        <svg
+          width="52"
+          height="47"
+          viewBox="0 0 52 47"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M37.3141 11.8265C37.3141 13.8934 36.7747 15.6889 35.9398 17.2182L33.3787 15.6857C33.955 14.41 34.2482 13.1224 34.2482 11.8265C34.2482 7.15636 30.6348 3.55479 25.9553 3.55479C22.7002 3.55479 20.1754 5.36463 18.745 7.861L18.501 8.28671L18.9221 8.53864C20.348 9.39189 21.269 10.7687 22.1976 12.2967L19.7282 13.5281C18.2238 10.914 15.4733 9.29908 12.4023 9.29908C7.72277 9.29908 4.10939 12.9006 4.10939 17.5708C4.10939 22.0731 7.46786 25.5823 11.9023 25.8286V35.1415V35.6415H12.4023H39.5082H40.0082V35.1415V25.8286C44.4413 25.5834 48.14 22.0989 48.14 17.5708C48.14 12.9006 44.5266 9.29908 39.847 9.29908L39.8118 9.29908C39.1541 9.29895 38.3746 9.2988 37.591 9.68952L37.3141 9.82759V10.137V10.1409V10.1449V10.1488V10.1528V10.1567V10.1606V10.1645V10.1684V10.1723V10.1762V10.1801V10.1839V10.1878V10.1917V10.1955V10.1994V10.2032V10.207V10.2109V10.2147V10.2185V10.2223V10.2261V10.2299V10.2336V10.2374V10.2412V10.2449V10.2487V10.2524V10.2562V10.2599V10.2636V10.2673V10.271V10.2748V10.2785V10.2821V10.2858V10.2895V10.2932V10.2968V10.3005V10.3042V10.3078V10.3114V10.3151V10.3187V10.3223V10.3259V10.3295V10.3331V10.3367V10.3403V10.3439V10.3475V10.3511V10.3546V10.3582V10.3617V10.3653V10.3688V10.3724V10.3759V10.3794V10.3829V10.3864V10.3899V10.3934V10.3969V10.4004V10.4039V10.4074V10.4109V10.4143V10.4178V10.4213V10.4247V10.4281V10.4316V10.435V10.4385V10.4419V10.4453V10.4487V10.4521V10.4555V10.4589V10.4623V10.4657V10.4691V10.4725V10.4758V10.4792V10.4826V10.4859V10.4893V10.4926V10.496V10.4993V10.5027V10.506V10.5093V10.5126V10.5159V10.5193V10.5226V10.5259V10.5292V10.5325V10.5358V10.539V10.5423V10.5456V10.5489V10.5521V10.5554V10.5587V10.5619V10.5652V10.5684V10.5717V10.5749V10.5781V10.5814V10.5846V10.5878V10.591V10.5942V10.5975V10.6007V10.6039V10.6071V10.6103V10.6135V10.6166V10.6198V10.623V10.6262V10.6294V10.6325V10.6357V10.6389V10.642V10.6452V10.6483V10.6515V10.6546V10.6578V10.6609V10.6641V10.6672V10.6703V10.6735V10.6766V10.6797V10.6828V10.6859V10.6891V10.6922V10.6953V10.6984V10.7015V10.7046V10.7077V10.7108V10.7139V10.717V10.72V10.7231V10.7262V10.7293V10.7324V10.7354V10.7385V10.7416V10.7446V10.7477V10.7508V10.7538V10.7569V10.7599V10.763V10.766V10.7691V10.7721V10.7752V10.7782V10.7812V10.7843V10.7873V10.7903V10.7934V10.7964V10.7994V10.8025V10.8055V10.8085V10.8115V10.8145V10.8175V10.8206V10.8236V10.8266V10.8296V10.8326V10.8356V10.8386V10.8416V10.8446V10.8476V10.8506V10.8536V10.8566V10.8596V10.8626V10.8656V10.8686V10.8716V10.8746V10.8776V10.8806V10.8835V10.8865V10.8895V10.8925V10.8955V10.8985V10.9014V10.9044V10.9074V10.9104V10.9134V10.9163V10.9193V10.9223V10.9253V10.9282V10.9312V10.9342V10.9372V10.9401V10.9431V10.9461V10.9491V10.952V10.955V10.958V10.9609V10.9639V10.9669V10.9698V10.9728V10.9758V10.9788V10.9817V10.9847V10.9877V10.9906V10.9936V10.9966V10.9995V11.0025V11.0055V11.0085V11.0114V11.0144V11.0174V11.0203V11.0233V11.0263V11.0293V11.0322V11.0352V11.0382V11.0412V11.0441V11.0471V11.0501V11.0531V11.0561V11.059V11.062V11.065V11.068V11.071V11.0739V11.0769V11.0799V11.0829V11.0859V11.0889V11.0919V11.0949V11.0978V11.1008V11.1038V11.1068V11.1098V11.1128V11.1158V11.1188V11.1218V11.1248V11.1278V11.1308V11.1339V11.1369V11.1399V11.1429V11.1459V11.1489V11.1519V11.155V11.158V11.161V11.164V11.1671V11.1701V11.1731V11.1761V11.1792V11.1822V11.1853V11.1883V11.1913V11.1944V11.1974V11.2005V11.2035V11.2066V11.2096V11.2127V11.2158V11.2188V11.2219V11.225V11.228V11.2311V11.2342V11.2373V11.2403V11.2434V11.2465V11.2496V11.2527V11.2558V11.2589V11.262V11.2651V11.2682V11.2713V11.2744V11.2775V11.2806V11.2837V11.2869V11.29V11.2931V11.2963V11.2994V11.3025V11.3057V11.3088V11.312V11.3151V11.3183V11.3214V11.3246V11.3277V11.3309V11.3341V11.3373V11.3404V11.3436V11.3468V11.35V11.3532V11.3564V11.3596V11.3628V11.366V11.3692V11.3724V11.3756V11.3789V11.3821V11.3853V11.3886V11.3918V11.395V11.3983V11.4015V11.4048V11.4081V11.4113V11.4146V11.4179V11.4211V11.4244V11.4277V11.431V11.4343V11.4376V11.4409V11.4442V11.4475V11.4508V11.4541V11.4575V11.4608V11.4641V11.4675V11.4708V11.4742V11.4775V11.4809V11.4842V11.4876V11.491V11.4944V11.4977V11.5011V11.5045V11.5079V11.5113V11.5147V11.5182V11.5216V11.525V11.5284V11.5319V11.5353V11.5388V11.5422V11.5457V11.5491V11.5526V11.5561V11.5595V11.563V11.5665V11.57V11.5735V11.577V11.5805V11.584V11.5876V11.5911V11.5946V11.5982V11.6017V11.6053V11.6088V11.6124V11.616V11.6195V11.6231V11.6267V11.6303V11.6339V11.6375V11.6411V11.6448V11.6484V11.652V11.6557V11.6593V11.663V11.6666V11.6703V11.674V11.6776V11.6813V11.685V11.6887V11.6924V11.6961V11.6998V11.7036V11.7073V11.711V11.7148V11.7185V11.7223V11.726V11.7298V11.7336V11.7374V11.7412V11.745V11.7488V11.7526V11.7564V11.7603V11.7641V11.7679V11.7718V11.7756V11.7795V11.7834V11.7873V11.7911V11.795V11.7989V11.8029V11.8068V11.8107V11.8146V11.8186V11.8225V11.8265ZM39.5082 43.4132H40.0082V42.9132V39.1963V38.6963H39.5082H12.4023H11.9023V39.1963V42.9132V43.4132H12.4023H39.5082ZM35.6813 6.66002L35.8236 6.92009H36.12C36.8385 6.92009 37.4636 6.83025 38.017 6.74535C38.0534 6.73976 38.0895 6.73421 38.1251 6.72872C38.6415 6.64919 39.0765 6.58219 39.5082 6.58219C45.671 6.58219 50.8671 11.766 50.8671 17.9087C50.8671 22.7368 47.6396 26.6266 43.395 28.2546L43.0741 28.3777V28.7214V45.7922H9.17527V28.3835V28.014L8.82195 27.9055C4.62918 26.619 1.38232 22.4217 1.38232 17.5708C1.38232 11.4281 6.23953 6.58219 12.4023 6.58219C13.7753 6.58219 14.707 6.58679 15.6328 6.89456L16.0731 7.0409L16.2519 6.61284C17.8579 2.76892 21.724 0.5 25.9553 0.5C30.143 0.5 33.7183 3.07103 35.6813 6.66002ZM21.7282 30.5867H19.0012V24.153H21.7282V30.5867ZM33.2482 30.5867H30.5212V24.153H33.2482V30.5867Z"
+            fill="#D04F4F"
+            stroke="black"
+          />
+        </svg>
+        <h1>Les Petits Plats</h1>
+      </div>
+      <div id="searchbar" class="w-100 position-relative">
+        <input
+          aria-label="Rechercher une recette"
+          placeholder="Rechercher une recette"
+          class="w-100 p-3 rounded-2 border-0 outline"
+        />
+        <i
+          class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle"
+        ></i>
+      </div>
+      <div id="applied-filters"></div>
+      <div id="filters" class="d-flex mt-4">
+        <div class="filter-input" tabindex="0" style="--color: #3282f7">
+          <div class="filter-controls">
+            <label for="filter-input-1">Ingrédients</label>
+            <input
+              id="filter-input-1"
+              placeholder="Rechercher un ingrédients"
+            />
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="filter-content">
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+            <button>Lait de coco</button>
+          </div>
+        </div>
+        <div class="filter-input" tabindex="0" style="--color: #68d9a4">
+          <div class="filter-controls">
+            <label for="filter-input-2">Appareils</label>
+            <input id="filter-input-2" placeholder="Rechercher un appareil" />
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="filter-content">
+            <button>Four</button>
+            <button>Four</button>
+            <button>Four</button>
+            <button>Four</button>
+            <button>Four</button>
+            <button>Four</button>
+            <button>Four</button>
+            <button>Four</button>
+            <button>Four</button>
+            <button>Four</button>
+            <button>Four</button>
+          </div>
+        </div>
+        <div class="filter-input" tabindex="0" style="--color: #ed6454">
+          <div class="filter-controls">
+            <label for="filter-input-3">Ustensiles</label>
+            <input id="filter-input-3" placeholder="Rechercher un ustensile" />
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="filter-content">
+            <button>Louche</button>
+            <button>Louche</button>
+            <button>Louche</button>
+            <button>Louche</button>
+            <button>Louche</button>
+            <button>Louche</button>
+            <button>Louche</button>
+            <button>Louche</button>
+            <button>Louche</button>
+            <button>Louche</button>
+            <button>Louche</button>
+          </div>
+        </div>
+      </div>
+
+      <section id="recipes" class="container-xxl">
+        <div class="row flex-row justify-content-evenly">
+          <div class="col-xs-6 col-md-4 col-lg-3" style="width: 380px">
+            <div class="card m-4">
+              <div
+                class="card-img-top"
+                style="background-color: #eeeeee; height: 9rem"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">Mon titre</h5>
+                <span class="card-text"
+                  >Some quick example text to build on the card title and make
+                  up the bulk of the card's content.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-4 col-lg-3" style="width: 380px">
+            <div class="card m-4">
+              <div
+                class="card-img-top"
+                style="background-color: #eeeeee; height: 9rem"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">Mon titre</h5>
+                <span class="card-text"
+                  >Some quick example text to build on the card title and make
+                  up the bulk of the card's content.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-4 col-lg-3" style="width: 380px">
+            <div class="card m-4">
+              <div
+                class="card-img-top"
+                style="background-color: #eeeeee; height: 9rem"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">Mon titre</h5>
+                <span class="card-text"
+                  >Some quick example text to build on the card title and make
+                  up the bulk of the card's content.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-4 col-lg-3" style="width: 380px">
+            <div class="card m-4">
+              <div
+                class="card-img-top"
+                style="background-color: #eeeeee; height: 9rem"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">Mon titre</h5>
+                <span class="card-text"
+                  >Some quick example text to build on the card title and make
+                  up the bulk of the card's content.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-4 col-lg-3" style="width: 380px">
+            <div class="card m-4">
+              <div
+                class="card-img-top"
+                style="background-color: #eeeeee; height: 9rem"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">Mon titre</h5>
+                <span class="card-text"
+                  >Some quick example text to build on the card title and make
+                  up the bulk of the card's content.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-4 col-lg-3" style="width: 380px">
+            <div class="card m-4">
+              <div
+                class="card-img-top"
+                style="background-color: #eeeeee; height: 9rem"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">Mon titre</h5>
+                <span class="card-text"
+                  >Some quick example text to build on the card title and make
+                  up the bulk of the card's content.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-4 col-lg-3" style="width: 380px">
+            <div class="card m-4">
+              <div
+                class="card-img-top"
+                style="background-color: #eeeeee; height: 9rem"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">Mon titre</h5>
+                <span class="card-text"
+                  >Some quick example text to build on the card title and make
+                  up the bulk of the card's content.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-4 col-lg-3" style="width: 380px">
+            <div class="card m-4">
+              <div
+                class="card-img-top"
+                style="background-color: #eeeeee; height: 9rem"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">Mon titre</h5>
+                <span class="card-text"
+                  >Some quick example text to build on the card title and make
+                  up the bulk of the card's content.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-4 col-lg-3" style="width: 380px">
+            <div class="card m-4">
+              <div
+                class="card-img-top"
+                style="background-color: #eeeeee; height: 9rem"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">Mon titre</h5>
+                <span class="card-text"
+                  >Some quick example text to build on the card title and make
+                  up the bulk of the card's content.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-6 col-md-4 col-lg-3" style="width: 380px">
+            <div class="card m-4">
+              <div
+                class="card-img-top"
+                style="background-color: #eeeeee; height: 9rem"
+              ></div>
+              <div class="card-body">
+                <h5 class="card-title">Mon titre</h5>
+                <span class="card-text"
+                  >Some quick example text to build on the card title and make
+                  up the bulk of the card's content.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

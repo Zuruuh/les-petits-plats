@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+// Using 7-1 Architecture, checkout some examples at
+// https://github.com/KittyGiraudel/sass-boilerplate/
+
+@import 'abstracts/abstracts';
+@import 'vendors/vendors';
+@import 'base/base';
+@import 'layouts/layouts';
+@import 'components/components';
+@import 'pages/pages';
+@import 'themes/themes';
