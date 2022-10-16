@@ -8,3 +8,25 @@
     font-size: 36px;
   }
 }
+
+#recipes {
+  .recipe-card {
+    width: calc(380px + var(--bs-gutter-x));
+
+    .card {
+      height: calc(100% - 2rem);
+
+      .card-img-top {
+        height: 9rem;
+        background-color: #eeeeee; // This is just a placeholder
+      }
+
+      .card-text {
+        &,
+        * {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
