@@ -90,3 +90,14 @@
     margin-left: 1rem;
   }
 }
+
+.applied-filter {
+  background-color: var(--color);
+  span {
+    font-size: 14px;
+  }
+
+  &:nth-child(n + 2) {
+    margin-left: 1rem;
+  }
+}
