@@ -1,4 +1,4 @@
-import { RecipesProvider } from './scripts/providers/RecipesProvider';
+import { RecipesProvider } from './scripts/app/providers/RecipesProvider';
 
 async function main(): Promise<void> {
   const recipes = await RecipesProvider.all();
