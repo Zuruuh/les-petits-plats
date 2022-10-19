@@ -13,8 +13,13 @@ jobs:
         with:
           node-version: 16
 
+      - name: Setup pnpm 📦
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.1.6
+
       - name: Install dependencies 🔧
-        run: npm i -g yarn && yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Run eslint ✨
         run: node_modules/eslint/bin/eslint.js ./
