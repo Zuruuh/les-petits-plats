@@ -74,7 +74,8 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
             (option): HTMLNode => ({
               tag: 'button',
               eventListeners: {
-                click: () => this.onSelectOption.bind(this)(option),
+                click: (e: MouseEvent) =>
+                  this.onSelectOption.bind(this)(e, option),
               },
               text: option,
             }),
@@ -92,11 +93,12 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
     this.container = container;
   }
 
-  private onSelectOption(option: string): void {
+  private onSelectOption(event: MouseEvent, option: string): void {
     if (!this.container) {
       throw new Error('Illegal State');
     }
 
+    (event.currentTarget as HTMLElement)!.remove();
     this.container.selectOption(option, this.color);
   }
 
