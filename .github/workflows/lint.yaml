@@ -28,4 +28,4 @@ jobs:
         run: node_modules/prettier/bin-prettier.js -c ./
 
       - name: Run stylelint ✨
-        run: node_modules/stylelint/bin/stylelint.js ./**/*.scss
+        run: node_modules/stylelint/bin/stylelint.js ./src/**/*.scss

@@ -46,7 +46,6 @@
     * {
       display: none;
       visibility: hidden;
-
       border: 0;
       background-color: transparent;
       color: #fff;
@@ -93,6 +92,7 @@
 
 .applied-filter {
   background-color: var(--color);
+
   span {
     font-size: 14px;
   }

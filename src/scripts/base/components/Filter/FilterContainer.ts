@@ -20,18 +20,19 @@ export class FilterContainer extends Observable<string[]> {
   }
 
   public selectOption(option: string, color: HexColor): void {
-    const element = this.renderButton(option, color);
+    const element = this.renderOption(option, color);
 
     this.selectedFiltersContainer.appendChild(element);
     this.next([...this.current, option]);
   }
 
-  private renderButton(option: string, color: HexColor): HTMLElement {
+  private renderOption(option: string, color: HexColor): HTMLElement {
     return HTMLNodeBuilder.node({
       tag: 'div',
       attributes: {
         class: 'applied-filter p-2 pe-1 my-1 rounded d-flex align-items-center',
         style: `--color: ${color}`,
+        tabindex: 0,
       },
       children: [
         {
