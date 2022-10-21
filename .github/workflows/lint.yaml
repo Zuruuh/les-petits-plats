@@ -22,7 +22,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Run eslint ✨
-        run: node_modules/eslint/bin/eslint.js ./
+        run: node_modules/eslint/bin/eslint.js ./src/**/*.ts
 
       - name: Run prettier ✨
         run: node_modules/prettier/bin-prettier.js -c ./
