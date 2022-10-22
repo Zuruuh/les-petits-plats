@@ -1,9 +1,10 @@
 import { RecipesProvider } from '../providers/RecipesProvider';
+import { Search } from '../../base/search/Search';
+import type { Recipe } from '../models/Recipe';
+import type { FilterDataWithOptionProvider } from '../../base/components/Filter/types/FilterData';
+import { FilterContainer } from '../../base/components/Filter/FilterContainer';
 import { Filter } from '../../base/components/Filter/Filter';
 import { ComponentRenderer } from '../../base/renderer/ComponentRenderer';
-import { FilterContainer } from '../../base/components/Filter/FilterContainer';
-import type { Recipe } from '../models/Recipe';
-import type { HexColor } from '../../base/types/HexColor';
 
 async function main(): Promise<void> {
   const recipes = await RecipesProvider.all();
@@ -12,61 +13,43 @@ async function main(): Promise<void> {
   console.log(recipes);
 }
 
-interface FilterData {
-  label: string;
-  color: HexColor;
-  inputPlaceholder: string;
-  options: string[];
-}
-
-const FILTERS_DATA_OPTIONLESS: (Omit<FilterData, 'options'> & {
-  optionProvider: (recipes: Recipe[]) => string[];
-})[] = [
+const FILTERS_DATA_WITH_PROVIDERS: FilterDataWithOptionProvider<Recipe>[] = [
   {
     label: 'Ingrédients',
     color: '#3282f7',
     inputPlaceholder: 'Rechercher un ingrédient',
-    optionProvider: (recipes) =>
-      recipes.reduce<string[]>(
-        (options, recipe): string[] => [
-          ...options,
-          ...recipe.ingredients.map(({ ingredient }) => ingredient),
-        ],
-        [],
-      ),
+    optionProvider: (recipe) =>
+      recipe.ingredients.map(({ ingredient }) => ingredient),
   },
   {
     label: 'Appareils',
     color: '#68d9a4',
     inputPlaceholder: 'Rechercher un appareil',
-    optionProvider: (recipes) => recipes.map(({ appliance }) => appliance),
+    optionProvider: (recipe) => recipe.appliance,
   },
   {
     label: 'Ustensiles',
     color: '#ed6454',
     inputPlaceholder: 'Rechercher un ustensile',
-    optionProvider: (recipes) =>
-      recipes.reduce<string[]>(
-        (ustensils, recipes) => [...ustensils, ...recipes.ustensils],
-        [],
-      ),
+    optionProvider: (recipe) => recipe.ustensils,
   },
 ];
 
 function setupFilters(recipes: Recipe[]): void {
-  const filters = initializeFilters();
   const container = new FilterContainer(
     document.querySelector<HTMLElement>('#applied-filters')!,
+    (filter: Filter) =>
+      ComponentRenderer.reattachComponentToDom(
+        document.querySelector<HTMLElement>('#filters')!,
+        filter,
+      ),
   );
-  filters.forEach((filter) => {
-    container.add(filter);
-    ComponentRenderer.reattachComponentToDom(
-      document.querySelector<HTMLElement>('#filters')!,
-      filter,
-    );
-  });
-
-  container.subscribe((e) => console.log(e.current));
+  const searcher = new Search<Recipe>(
+    recipes,
+    FILTERS_DATA_WITH_PROVIDERS,
+    container,
+  );
+  recipes = searcher.search("mais c'est quoi ce poulet");
 }
 
 main().catch(console.error);

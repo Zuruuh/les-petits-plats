@@ -1,13 +1,18 @@
 import { Observable } from '../../utils/Observable';
 import { Filter } from './Filter';
 import { HTMLNodeBuilder } from '../../composers/HTMLNodeBuilder';
-import type { HexColor } from '../../types/HexColor';
 
-export class FilterContainer extends Observable<string[]> {
+export class FilterContainer extends Observable<Record<string, string[]>> {
   private filters: Filter[] = [];
 
-  public constructor(private readonly selectedFiltersContainer: HTMLElement) {
-    super([]);
+  /**
+   * @param renderer The function called to render the filter in the dom
+   */
+  public constructor(
+    private readonly selectedFiltersContainer: HTMLElement,
+    public readonly renderer: (filter: Filter) => void,
+  ) {
+    super({});
   }
 
   public add(...filters: Filter[]): void {
@@ -15,23 +20,31 @@ export class FilterContainer extends Observable<string[]> {
       if (!this.filters.includes(filter)) {
         this.filters.push(filter);
         filter.setContainer(this);
+        this.renderer(filter);
       }
     });
   }
 
-  public selectOption(option: string, color: HexColor): void {
-    const element = this.renderOption(option, color);
+  public selectOption(option: string, filter: Filter): void {
+    const element = this.renderOption(option, filter);
 
     this.selectedFiltersContainer.appendChild(element);
-    this.next([...this.current, option]);
+    const options = this.current;
+    if (!(filter.label in options)) {
+      options[filter.label] = [];
+    }
+
+    options[filter.label].push(option);
+
+    this.next(options);
   }
 
-  private renderOption(option: string, color: HexColor): HTMLElement {
+  private renderOption(option: string, filter: Filter): HTMLElement {
     return HTMLNodeBuilder.node({
       tag: 'div',
       attributes: {
         class: 'applied-filter p-2 pe-1 my-1 rounded d-flex align-items-center',
-        style: `--color: ${color}`,
+        style: `--color: ${filter.color}`,
         tabindex: 0,
       },
       children: [
@@ -46,7 +59,8 @@ export class FilterContainer extends Observable<string[]> {
               'text-white bg-transparent border-0 ms-1 d-flex align-content-center justify-content-center',
           },
           eventListeners: {
-            click: (e: MouseEvent) => this.onRemoveSelect.bind(this)(e, option),
+            click: (e: MouseEvent) =>
+              this.onRemoveSelect.bind(this)(e, option, filter),
           },
           children: [
             {
@@ -59,10 +73,18 @@ export class FilterContainer extends Observable<string[]> {
     });
   }
 
-  private onRemoveSelect(e: MouseEvent, option: string): void {
+  private onRemoveSelect(e: MouseEvent, option: string, filter: Filter): void {
     const button = e.currentTarget as HTMLButtonElement;
     button.parentElement!.remove();
 
-    this.next(this.current.filter((filter) => filter !== option));
+    const nextData = this.current[filter.label].filter(
+      (filter) => filter !== option,
+    );
+
+    this.next({ ...this.current, ...{ [filter.label]: nextData } });
+  }
+
+  public getFilters(): Filter[] {
+    return this.filters;
   }
 }

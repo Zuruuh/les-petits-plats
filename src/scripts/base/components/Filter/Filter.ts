@@ -11,8 +11,8 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
   private container: FilterContainer | undefined;
 
   public constructor(
-    private readonly label: string,
-    private readonly color: HexColor,
+    public readonly label: string,
+    public readonly color: HexColor,
     private readonly inputPlaceholder: string,
     private options: string[],
   ) {
@@ -87,6 +87,10 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
 
   public updateOptions(options: string[]): void {
     this.options = options;
+
+    if (this.container) {
+      this.container.renderer(this);
+    }
   }
 
   public setContainer(container: FilterContainer | undefined): void {
@@ -99,7 +103,7 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
     }
 
     (event.currentTarget as HTMLElement)!.remove();
-    this.container.selectOption(option, this.color);
+    this.container.selectOption(option, this);
   }
 
   private onInput(event: Event): void {
@@ -116,5 +120,9 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
 
   private getUniqueInputId(): string {
     return `${this.getComponentClassName()}-field-${this.getId()}`;
+  }
+
+  public getOptions(): string[] {
+    return this.options;
   }
 }
