@@ -68,7 +68,9 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
         {
           tag: 'div',
           attributes: {
-            class: 'filter-content',
+            class: `filter-content ${
+              this.options.length > 30 ? 'large' : 'small'
+            }`,
           },
           children: this.options.map(
             (option): HTMLNode => ({
