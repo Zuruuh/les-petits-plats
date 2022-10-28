@@ -1,6 +1,6 @@
 import type { Recipe } from '../models/Recipe';
-import { Store } from '../components/Store';
-import { DataLoader } from '../loaders/DataLoader';
+import { Store } from '../../base/components/Store';
+import { DataLoader } from '../../base/loaders/DataLoader';
 
 export class RecipesProvider {
   private static STORE_KEY = 'recipes';

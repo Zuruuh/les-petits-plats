@@ -46,7 +46,6 @@
     * {
       display: none;
       visibility: hidden;
-
       border: 0;
       background-color: transparent;
       color: #fff;
@@ -75,7 +74,14 @@
     .filter-content {
       visibility: visible;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      &.small {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      &.large {
+        grid-template-columns: repeat(5, 1fr);
+      }
 
       * {
         display: block;
@@ -93,6 +99,7 @@
 
 .applied-filter {
   background-color: var(--color);
+
   span {
     font-size: 14px;
   }

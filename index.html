@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Les Petits Plats</title>
     <link rel="stylesheet" href="/src/styles/styles.scss" type="text/css" />
-    <script type="module" src="/src/app.ts"></script>
+    <script type="module" src="/src/scripts/app/pages/index.ts"></script>
   </head>
   <body>
     <main id="app" class="container-xl vw-100 px-5">
@@ -35,126 +35,8 @@
           class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle"
         ></i>
       </div>
-      <div id="applied-filters" class="d-flex flex-wrap text-white mt-3">
-        <div
-          class="applied-filter p-2 pe-1 my-1 rounded d-flex align-items-center"
-          style="--color: #3282f7"
-        >
-          <span>Lait de coco</span>
-          <button
-            class="text-white bg-transparent border-0 ms-1 d-flex align-content-center justify-content-center"
-          >
-            <i class="fa-regular fa-circle-xmark"></i>
-          </button>
-        </div>
-        <div
-          class="applied-filter p-2 pe-1 my-1 rounded d-flex align-items-center"
-          style="--color: #68d9a4"
-        >
-          <span>Louche</span>
-          <button
-            class="text-white bg-transparent border-0 ms-1 d-flex align-content-center justify-content-center"
-          >
-            <i class="fa-regular fa-circle-xmark"></i>
-          </button>
-        </div>
-        <div
-          class="applied-filter p-2 pe-1 my-1 rounded d-flex align-items-center"
-          style="--color: #ed6454"
-        >
-          <span>Four</span>
-          <button
-            class="text-white bg-transparent border-0 ms-1 d-flex align-content-center justify-content-center"
-          >
-            <i class="fa-regular fa-circle-xmark"></i>
-          </button>
-        </div>
-      </div>
-      <div id="filters" class="d-flex mt-4">
-        <div class="filter-input" tabindex="0" style="--color: #3282f7">
-          <div class="filter-controls">
-            <label for="filter-input-1">Ingrédients</label>
-            <input
-              id="filter-input-1"
-              placeholder="Rechercher un ingrédients"
-            />
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="filter-content">
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-            <button>Lait de coco</button>
-          </div>
-        </div>
-        <div class="filter-input" tabindex="0" style="--color: #68d9a4">
-          <div class="filter-controls">
-            <label for="filter-input-2">Appareils</label>
-            <input id="filter-input-2" placeholder="Rechercher un appareil" />
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="filter-content">
-            <button>Four</button>
-            <button>Four</button>
-            <button>Four</button>
-            <button>Four</button>
-            <button>Four</button>
-            <button>Four</button>
-            <button>Four</button>
-            <button>Four</button>
-            <button>Four</button>
-            <button>Four</button>
-            <button>Four</button>
-          </div>
-        </div>
-        <div class="filter-input" tabindex="0" style="--color: #ed6454">
-          <div class="filter-controls">
-            <label for="filter-input-3">Ustensiles</label>
-            <input id="filter-input-3" placeholder="Rechercher un ustensile" />
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-          <div class="filter-content">
-            <button>Louche</button>
-            <button>Louche</button>
-            <button>Louche</button>
-            <button>Louche</button>
-            <button>Louche</button>
-            <button>Louche</button>
-            <button>Louche</button>
-            <button>Louche</button>
-            <button>Louche</button>
-            <button>Louche</button>
-            <button>Louche</button>
-          </div>
-        </div>
-      </div>
+      <div id="applied-filters" class="d-flex flex-wrap text-white mt-3"></div>
+      <div id="filters" class="d-flex mt-4"></div>
 
       <section id="recipes" class="container-xxl">
         <div
