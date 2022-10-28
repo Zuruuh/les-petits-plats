@@ -5,12 +5,35 @@ import type { FilterDataWithOptionProvider } from '../../base/components/Filter/
 import { FilterContainer } from '../../base/components/Filter/FilterContainer';
 import { Filter } from '../../base/components/Filter/Filter';
 import { ComponentRenderer } from '../../base/renderer/ComponentRenderer';
+import { RecipeCard } from '../templates/RecipeCard';
 
 async function main(): Promise<void> {
   const recipes = await RecipesProvider.all();
-  setupFilters(recipes);
+  const recipesContainer =
+    document.querySelector<HTMLDivElement>('#recipes > div')!;
+  const searchInput =
+    document.querySelector<HTMLInputElement>('#searchbar > input')!;
 
-  console.log(recipes);
+  recipesContainer.innerHTML = '';
+
+  for (const recipe of recipes) {
+    const card = new RecipeCard(recipe).render();
+    recipesContainer.appendChild(card);
+  }
+
+  const searcher = setupFilters(recipes);
+  searchInput.addEventListener('input', (e: Event) => {
+    searcher.search((e.currentTarget as HTMLInputElement).value);
+
+    searcher.subscribeForPageLifecycle((observable) => {
+      recipesContainer.innerHTML = '';
+
+      for (const recipe of observable.current) {
+        const card = new RecipeCard(recipe).render();
+        recipesContainer.appendChild(card);
+      }
+    });
+  });
 }
 
 const FILTERS_DATA_WITH_PROVIDERS: FilterDataWithOptionProvider<Recipe>[] = [
@@ -35,7 +58,7 @@ const FILTERS_DATA_WITH_PROVIDERS: FilterDataWithOptionProvider<Recipe>[] = [
   },
 ];
 
-function setupFilters(recipes: Recipe[]): void {
+function setupFilters(recipes: Recipe[]): Search<Recipe> {
   const container = new FilterContainer(
     document.querySelector<HTMLElement>('#applied-filters')!,
     (filter: Filter) =>
@@ -44,12 +67,16 @@ function setupFilters(recipes: Recipe[]): void {
         filter,
       ),
   );
-  const searcher = new Search<Recipe>(
+  return new Search<Recipe>(
     recipes,
     FILTERS_DATA_WITH_PROVIDERS,
     container,
+    (recipe: Recipe) => [
+      recipe.name,
+      recipe.description,
+      ...recipe.ingredients.map(({ ingredient }) => ingredient),
+    ],
   );
-  recipes = searcher.search("mais c'est quoi ce poulet");
 }
 
 main().catch(console.error);

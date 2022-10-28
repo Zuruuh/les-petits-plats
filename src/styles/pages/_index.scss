@@ -11,14 +11,14 @@
 
 #recipes {
   .recipe-card {
-    width: calc(380px + var(--bs-gutter-x));
+    width: calc(420px + var(--bs-gutter-x));
 
     .card {
       height: calc(100% - 2rem);
 
       .card-img-top {
         height: 9rem;
-        background-color: #eee; // This is just a placeholder
+        background-color: #c7bebe; // This is just a placeholder
       }
 
       .card-text {

@@ -1,5 +1,5 @@
 import type { ComponentInterface } from './ComponentInterface';
-import type { IdentifiableInterface } from '../types/IdentifiableInterface';
+import type { IdentifiableInterface } from '../types/Identifiable';
 
 export class ComponentRenderer {
   public static reattachComponentToDom(

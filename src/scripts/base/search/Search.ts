@@ -3,26 +3,42 @@ import { Filter } from '../components/Filter/Filter';
 import { FilterContainer } from '../components/Filter/FilterContainer';
 import type { FilterDataWithOptionProvider } from '../components/Filter/types/FilterData';
 import type { FilterOptionGeneratorHook } from '../components/Filter/types/FilterOptionGeneratorHook';
+import type { SearchContentAggregator } from './types/SearchContentAggregator';
+import type { IdentifiableObject } from '../types/Identifiable';
 
-export class Search<T> extends Observable<T[]> {
-  private filters: Filter[];
+export class Search<T extends IdentifiableObject> extends Observable<T[]> {
+  private lastQuery: string = '';
+  private readonly filters: Filter[];
   private filterHooks: Record<string, FilterOptionGeneratorHook<T>[]> = {};
   private filterHooksLabelMap: Record<string, Filter> = {};
+  private aggregatedSearchContent: Record<PropertyKey, string[]> = {};
 
   public constructor(
     private readonly searchables: T[],
     filtersData: FilterDataWithOptionProvider<T>[],
     private emptyFilterContainer: FilterContainer,
+    private searchContentAggregator: SearchContentAggregator<T>,
   ) {
     super(searchables);
 
+    this.aggregateSearchContent();
     this.filters = this.instantiateFilters(filtersData);
   }
 
   public search(query: string): T[] {
+    this.lastQuery = query;
+    const splitQuery = query.toLowerCase().split(' ');
     const searched = this.searchables.filter((searchable) => {
       this.triggerFilterHooks(searchable);
+      const aggregatedSearchContent =
+        this.aggregatedSearchContent[searchable.id];
+
+      return aggregatedSearchContent.some((string) => {
+        return splitQuery.every((queryPart) => string.includes(queryPart));
+      });
     });
+
+    this.next(searched);
 
     return searched;
   }
@@ -61,7 +77,6 @@ export class Search<T> extends Observable<T[]> {
       .reduce((prev, curr) => ({ ...prev, ...curr }), {});
 
     Object.entries(optionsMap).forEach(([label, options]) => {
-      console.log(options);
       const filter = this.filterHooksLabelMap[label];
       filter.updateOptions(
         Array.from(new Set([...filter.getOptions(), ...options])),
@@ -72,7 +87,7 @@ export class Search<T> extends Observable<T[]> {
   private instantiateFilters(
     filtersData: FilterDataWithOptionProvider<T>[],
   ): Filter[] {
-    return filtersData.map((filterData) => {
+    const filters = filtersData.map((filterData) => {
       const filter = new Filter(
         filterData.label,
         filterData.color,
@@ -84,6 +99,21 @@ export class Search<T> extends Observable<T[]> {
       this.emptyFilterContainer.add(filter);
 
       return filter;
+    });
+
+    for (const searchable of this.searchables) {
+      this.triggerFilterHooks(searchable);
+    }
+
+    return filters;
+  }
+
+  private aggregateSearchContent(): void {
+    this.searchables.forEach((searchable: T) => {
+      this.aggregatedSearchContent[searchable.id] =
+        this.searchContentAggregator(searchable).map((content) =>
+          content.toLowerCase(),
+        );
     });
   }
 }

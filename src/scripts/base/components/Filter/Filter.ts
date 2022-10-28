@@ -3,12 +3,13 @@ import { HTMLNodeBuilder } from '../../composers/HTMLNodeBuilder';
 import { FilterContainer } from './FilterContainer';
 import type { HexColor } from '../../types/HexColor';
 import type { ComponentInterface } from '../../renderer/ComponentInterface';
-import type { IdentifiableInterface } from '../../types/IdentifiableInterface';
-import type { HTMLNode } from '../../composers/HTMLNodeBuilder';
+import type { IdentifiableInterface } from '../../types/Identifiable';
 
 export class Filter implements ComponentInterface, IdentifiableInterface {
   private readonly id: string;
   private container: FilterContainer | undefined;
+  private unfilteredOptions: string[];
+  private lastQuery: string = '';
 
   public constructor(
     public readonly label: string,
@@ -17,6 +18,7 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
     private options: string[],
   ) {
     this.id = RandomStringGenerator.generate();
+    this.unfilteredOptions = options;
   }
 
   public render(): HTMLElement {
@@ -54,7 +56,7 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
                 placeholder: this.inputPlaceholder,
               },
               eventListeners: {
-                change: this.onInput.bind(this),
+                input: this.onInput.bind(this),
               },
             },
             {
@@ -72,16 +74,7 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
               this.options.length > 30 ? 'large' : 'small'
             }`,
           },
-          children: this.options.map(
-            (option): HTMLNode => ({
-              tag: 'button',
-              eventListeners: {
-                click: (e: MouseEvent) =>
-                  this.onSelectOption.bind(this)(e, option),
-              },
-              text: option,
-            }),
-          ),
+          children: this.generateOptionsButtons.bind(this)(this.options),
         },
       ],
     });
@@ -89,6 +82,7 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
 
   public updateOptions(options: string[]): void {
     this.options = options;
+    this.unfilteredOptions = options;
 
     if (this.container) {
       this.container.renderer(this);
@@ -109,7 +103,52 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
   }
 
   private onInput(event: Event): void {
-    console.log((event.currentTarget as HTMLInputElement).value);
+    const query = (event.currentTarget as HTMLInputElement).value;
+    const optionsContainer =
+      (event.currentTarget as HTMLElement)!.parentElement!.parentElement!.querySelector<HTMLElement>(
+        '.filter-content',
+      )!;
+    optionsContainer.innerHTML = '';
+
+    if (!query) {
+      this.options = this.unfilteredOptions;
+      const optionsButtons = this.generateOptionsButtons(this.options);
+
+      for (const optionButton of optionsButtons) {
+        optionsContainer.appendChild(optionButton);
+      }
+      this.lastQuery = query;
+
+      return;
+    }
+
+    if (this.lastQuery.length > query.length) {
+      this.options = this.unfilteredOptions;
+    }
+
+    const nextOptions = [];
+    for (const option of this.options) {
+      if (option.toLowerCase().includes(query.toLowerCase())) {
+        nextOptions.push(option);
+        optionsContainer.appendChild(this.generateOptionsButtons([option])[0]);
+      }
+    }
+
+    this.lastQuery = query;
+    this.options = nextOptions;
+  }
+
+  private generateOptionsButtons(options: string[]): HTMLElement[] {
+    return options.map(
+      (option): HTMLElement =>
+        HTMLNodeBuilder.node({
+          tag: 'button',
+          eventListeners: {
+            click: (e: MouseEvent) => this.onSelectOption.bind(this)(e, option),
+          },
+          text: option,
+        }),
+    );
   }
 
   public getId(): string {

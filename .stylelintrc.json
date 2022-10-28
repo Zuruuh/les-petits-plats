@@ -4,6 +4,12 @@
     "stylelint-config-prettier-scss"
   ],
   "rules": {
-    "indentation": 2
+    "indentation": 2,
+    "value-no-vendor-prefix": [
+      true,
+      {
+        "ignoreValues": ["box"]
+      }
+    ]
   }
 }
