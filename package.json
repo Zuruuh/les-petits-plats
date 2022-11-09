@@ -6,11 +6,16 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "prod": "tsc && vite build --base=$1",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "playwright:benchmark": "playwright test -c playwright.config.benchmark.ts",
+    "playwright:install": "playwright install",
+    "docker:build": "docker build . -t les-petits-plats/node -f docker/node.dockerfile",
+    "docker:benchmark": "docker run -it --rm --ipc=host --network=host -v \"$PWD:/srv\" -u $(id -u ${USER}):$(id -g ${USER}) -w /srv les-petits-plats/node:latest pnpm run playwright:benchmark"
   },
   "author": "Younès Ziadi",
   "license": "MIT",
   "devDependencies": {
+    "@playwright/test": "^1.27.1",
     "@types/node": "^18.0.4",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
@@ -20,6 +25,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "fast-glob": "^3.2.11",
     "normalize-css": "^2.3.1",
+    "playwright": "^1.27.1",
     "postcss": "^8.4.14",
     "postcss-load-config": "^4.0.1",
     "postcss-scss": "^4.0.4",
@@ -37,5 +43,8 @@
     "@fortawesome/fontawesome-free": "^6.2.0",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }

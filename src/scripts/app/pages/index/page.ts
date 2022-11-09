@@ -1,11 +1,11 @@
-import { RecipesProvider } from '../providers/RecipesProvider';
-import { Search } from '../../base/search/Search';
-import { FilterContainer } from '../../base/components/Filter/FilterContainer';
-import { Filter } from '../../base/components/Filter/Filter';
-import { ComponentRenderer } from '../../base/renderer/ComponentRenderer';
-import { RecipeCard } from '../templates/RecipeCard';
-import type { Recipe } from '../models/Recipe';
-import type { FilterDataWithOptionProvider } from '../../base/components/Filter/types/FilterData';
+import { RecipesProvider } from '../../providers/RecipesProvider';
+import { Search } from '../../../base/search/Search';
+import { FilterContainer } from '../../../base/components/Filter/FilterContainer';
+import { Filter } from '../../../base/components/Filter/Filter';
+import { ComponentRenderer } from '../../../base/renderer/ComponentRenderer';
+import { RecipeCard } from '../../templates/RecipeCard';
+import { FILTERS_DATA_WITH_PROVIDERS } from './filtersData';
+import type { Recipe } from '../../models/Recipe';
 
 async function main(): Promise<void> {
   const recipes = await RecipesProvider.all();
@@ -39,33 +39,6 @@ async function main(): Promise<void> {
   });
 }
 
-const FILTERS_DATA_WITH_PROVIDERS: FilterDataWithOptionProvider<Recipe>[] = [
-  {
-    label: 'Ingrédients',
-    color: '#3282f7',
-    inputPlaceholder: 'Rechercher un ingrédient',
-    optionProvider: (recipe) =>
-      recipe.ingredients.map(({ ingredient }) => ingredient),
-    apply: (recipe, option) =>
-      recipe.ingredients.some(({ ingredient }) => ingredient === option),
-  },
-  {
-    label: 'Appareils',
-    color: '#68d9a4',
-    inputPlaceholder: 'Rechercher un appareil',
-    optionProvider: (recipe) => recipe.appliance,
-    apply: (recipe, option) => recipe.appliance === option,
-  },
-  {
-    label: 'Ustensiles',
-    color: '#ed6454',
-    inputPlaceholder: 'Rechercher un ustensile',
-    optionProvider: (recipe) => recipe.ustensils,
-    apply: (recipe, option) =>
-      recipe.ustensils.some((ustensil) => ustensil === option),
-  },
-];
-
 function setupFilters(recipes: Recipe[]): Search<Recipe> {
   const container = new FilterContainer(
     document.querySelector<HTMLElement>('#applied-filters')!,
@@ -75,6 +48,7 @@ function setupFilters(recipes: Recipe[]): Search<Recipe> {
         filter,
       ),
   );
+
   return new Search<Recipe>(
     recipes,
     FILTERS_DATA_WITH_PROVIDERS,
