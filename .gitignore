@@ -28,3 +28,4 @@ dist-ssr
 /playwright/.cache/
 /playwright/screenshots/
 /test-results/
+.vercel
