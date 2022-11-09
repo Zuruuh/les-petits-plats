@@ -5,7 +5,9 @@ import type { HexColor } from '../../types/HexColor';
 import type { ComponentInterface } from '../../renderer/ComponentInterface';
 import type { IdentifiableInterface } from '../../types/Identifiable';
 
-export class Filter implements ComponentInterface, IdentifiableInterface {
+export class Filter<T = any>
+  implements ComponentInterface, IdentifiableInterface
+{
   private readonly id: string;
   private container: FilterContainer | undefined;
   private unfilteredOptions: string[];
@@ -16,6 +18,7 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
     public readonly color: HexColor,
     private readonly inputPlaceholder: string,
     private options: string[],
+    public readonly apply: (object: T, option: string) => boolean,
   ) {
     this.id = RandomStringGenerator.generate();
     this.unfilteredOptions = options;
@@ -87,6 +90,11 @@ export class Filter implements ComponentInterface, IdentifiableInterface {
     if (this.container) {
       this.container.renderer(this);
     }
+  }
+
+  public addOption(option: string): void {
+    this.options.push(option);
+    this.updateOptions(this.options);
   }
 
   public setContainer(container: FilterContainer | undefined): void {

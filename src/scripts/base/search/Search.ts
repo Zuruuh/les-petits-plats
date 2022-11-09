@@ -8,7 +8,8 @@ import type { IdentifiableObject } from '../types/Identifiable';
 
 export class Search<T extends IdentifiableObject> extends Observable<T[]> {
   private lastQuery: string = '';
-  private readonly filters: Filter[];
+  private readonly filtersMap: Record<string, Filter> = {};
+  private filterContainer: FilterContainer;
   private filterHooks: Record<string, FilterOptionGeneratorHook<T>[]> = {};
   private filterHooksLabelMap: Record<string, Filter> = {};
   private aggregatedSearchContent: Record<PropertyKey, string[]> = {};
@@ -16,31 +17,53 @@ export class Search<T extends IdentifiableObject> extends Observable<T[]> {
   public constructor(
     private readonly searchables: T[],
     filtersData: FilterDataWithOptionProvider<T>[],
-    private emptyFilterContainer: FilterContainer,
+    emptyFilterContainer: FilterContainer,
     private searchContentAggregator: SearchContentAggregator<T>,
   ) {
     super(searchables);
 
     this.aggregateSearchContent();
-    this.filters = this.instantiateFilters(filtersData);
+    this.filtersMap = this.instantiateFilters(
+      filtersData,
+      emptyFilterContainer,
+    );
+    this.filterContainer = emptyFilterContainer;
+    this.listenToFiltersUpdates();
   }
 
   public search(query: string): T[] {
     this.lastQuery = query;
     const splitQuery = query.toLowerCase().split(' ');
-    const searched = this.searchables.filter((searchable) => {
-      this.triggerFilterHooks(searchable);
+    Object.values(this.filtersMap).forEach((filter) =>
+      filter.updateOptions([]),
+    );
+    const map = {};
+
+    const results = this.searchables.filter((searchable) => {
       const aggregatedSearchContent =
         this.aggregatedSearchContent[searchable.id];
 
-      return aggregatedSearchContent.some((string) => {
-        return splitQuery.every((queryPart) => string.includes(queryPart));
-      });
+      const match =
+        aggregatedSearchContent.some((string) => {
+          return splitQuery.every((queryPart) => string.includes(queryPart));
+        }) &&
+        Object.entries(this.filterContainer.current).every(
+          ([filterLabel, values]) =>
+            values.every((value) =>
+              this.filtersMap[filterLabel]!.apply(searchable, value),
+            ),
+        );
+
+      if (match) {
+        this.triggerFilterHooks(searchable, map);
+      }
+
+      return match;
     });
 
-    this.next(searched);
+    this.next(results);
 
-    return searched;
+    return results;
   }
 
   private addFilterHook(
@@ -55,7 +78,10 @@ export class Search<T extends IdentifiableObject> extends Observable<T[]> {
     this.filterHooksLabelMap[filter.label] = filter;
   }
 
-  private triggerFilterHooks(searchable: T): void {
+  private triggerFilterHooks(
+    searchable: T,
+    alreadyExistingFiltersMap: Record<string, Record<string, string>>,
+  ): void {
     // TODO: Combine this .map.reduce to just .reduce
     // TODO: Refactor all of this in a single loop if feasible
     // TODO: Make sure entries are unique (Maybe use a map with all entries used a keys instead of using Array.from(new Set)) ?
@@ -74,38 +100,68 @@ export class Search<T extends IdentifiableObject> extends Observable<T[]> {
           [label]: options.reduce((prev, option) => [...prev, ...option], []),
         };
       })
-      .reduce((prev, curr) => ({ ...prev, ...curr }), {});
+      .reduce((prev, curr) => {
+        const next = { ...prev };
+        Object.keys(curr).forEach((key) => {
+          if (Object.hasOwn(next, key) && Array.isArray(next[key])) {
+            (next[key] as string[]).concat(curr[key]);
+          } else {
+            next[key] = curr[key];
+          }
+        });
+
+        return next;
+      }, {});
 
     Object.entries(optionsMap).forEach(([label, options]) => {
       const filter = this.filterHooksLabelMap[label];
-      filter.updateOptions(
-        Array.from(new Set([...filter.getOptions(), ...options])),
-      );
+      if (!(label in alreadyExistingFiltersMap)) {
+        alreadyExistingFiltersMap[label] = {};
+      }
+
+      options.forEach((option) => {
+        const optionKey = option
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/\W/g, '');
+
+        if (!(optionKey in alreadyExistingFiltersMap[label])) {
+          alreadyExistingFiltersMap[label][optionKey] = option;
+          filter.addOption(option);
+        }
+      });
     });
   }
 
   private instantiateFilters(
     filtersData: FilterDataWithOptionProvider<T>[],
-  ): Filter[] {
+    emptyFilterContainer: FilterContainer,
+  ): Record<string, Filter> {
     const filters = filtersData.map((filterData) => {
       const filter = new Filter(
         filterData.label,
         filterData.color,
         filterData.inputPlaceholder,
         [],
+        filterData.apply,
       );
 
       this.addFilterHook(filter, filterData.optionProvider);
-      this.emptyFilterContainer.add(filter);
+      emptyFilterContainer.add(filter);
 
       return filter;
     });
 
+    const map = {};
     for (const searchable of this.searchables) {
-      this.triggerFilterHooks(searchable);
+      this.triggerFilterHooks(searchable, map);
     }
 
-    return filters;
+    return filters.reduce(
+      (acc, filter) => ({ ...acc, [filter.label]: filter }),
+      {},
+    );
   }
 
   private aggregateSearchContent(): void {
@@ -115,5 +171,15 @@ export class Search<T extends IdentifiableObject> extends Observable<T[]> {
           content.toLowerCase(),
         );
     });
+  }
+
+  private listenToFiltersUpdates(): void {
+    this.filterContainer.subscribeForPageLifecycle(() =>
+      this.search(this.lastQuery),
+    );
+  }
+
+  public getLastQuery(): string {
+    return this.lastQuery;
   }
 }
