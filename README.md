@@ -8,7 +8,7 @@ To setup the project locally, you need to meet the following requirements:
 
 - Git
 - NodeJS (Version ^17, prefer installation using [NVM](https://github.com/nvm-sh/nvm))
-- Yarn (Install with `npm i -g yarn`)
+- PNPM (Install with `npm i -g pnpm`)
 
 Once everything is installed, you can clone the project locally with the following command:
 
@@ -17,16 +17,16 @@ git clone git@github.com:Zuruuh/les-petits-plats
 cd les-petits-plats
 ```
 
-Then, install all the npm dependencies with `yarn install`.
+Then, install all the npm dependencies with `pnpm install`.
 
 ### Development
 
-To run the project locally, use the npm script _dev_ with `yarn run dev`, and the project will be served locally at http://localhost:5173.
+To run the project locally, use the npm script _dev_ with `pnpm run dev`, and the project will be served locally at http://localhost:5173.
 You will benefit from ViteJS Hot Module Replacement which will update all your code directly in your browser when you edit it.
 
 ### Production
 
-To build the project for production, simply run `yarn run build` and you will get your prod-ready project in the _./dist_ folder.
+To build the project for production, simply run `pnpm run build` and you will get your prod-ready project in the _./dist_ folder.
 
 ## Tools
 

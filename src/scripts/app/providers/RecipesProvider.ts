@@ -9,10 +9,10 @@ export class RecipesProvider {
     if (!Store.has(RecipesProvider.STORE_KEY)) {
       Store.set(
         RecipesProvider.STORE_KEY,
-        new DataLoader().load('/data/recipes.json'),
+        new DataLoader().load<Recipe[]>('/data/recipes.json'),
       );
     }
 
-    return Store.get(RecipesProvider.STORE_KEY);
+    return Store.get<Recipe[]>(RecipesProvider.STORE_KEY);
   }
 }
