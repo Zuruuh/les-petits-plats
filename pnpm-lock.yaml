@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@fortawesome/fontawesome-free': ^6.2.0
+  '@playwright/test': ^1.27.1
   '@popperjs/core': ^2.11.6
   '@types/node': ^18.0.4
   '@typescript-eslint/eslint-plugin': ^5.30.6
@@ -13,6 +14,7 @@ specifiers:
   eslint-plugin-prettier: ^4.2.1
   fast-glob: ^3.2.11
   normalize-css: ^2.3.1
+  playwright: ^1.27.1
   postcss: ^8.4.14
   postcss-load-config: ^4.0.1
   postcss-scss: ^4.0.4
@@ -32,6 +34,7 @@ dependencies:
   bootstrap: 5.2.2_@popperjs+core@2.11.6
 
 devDependencies:
+  '@playwright/test': 1.27.1
   '@types/node': 18.11.2
   '@typescript-eslint/eslint-plugin': 5.40.1_ukgdydjtebaxmxfqp5v5ulh64y
   '@typescript-eslint/parser': 5.40.1_z4bbprzjrhnsfa24uvmcbu7f5q
@@ -41,6 +44,7 @@ devDependencies:
   eslint-plugin-prettier: 4.2.1_hvbqyfstm4urdpm6ffpwfka4e4
   fast-glob: 3.2.12
   normalize-css: 2.3.1
+  playwright: 1.27.1
   postcss: 8.4.18
   postcss-load-config: 4.0.1_postcss@8.4.18
   postcss-scss: 4.0.5_postcss@8.4.18
@@ -168,6 +172,15 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
+    dev: true
+
+  /@playwright/test/1.27.1:
+    resolution: {integrity: sha512-mrL2q0an/7tVqniQQF6RBL2saskjljXzqNcCOVMUjRIgE6Y38nCNaP+Dc2FBW06bcpD3tqIws/HT9qiMHbNU0A==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dependencies:
+      '@types/node': 18.11.2
+      playwright-core: 1.27.1
     dev: true
 
   /@popperjs/core/2.11.6:
@@ -1627,6 +1640,21 @@ packages:
   /picomatch/2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+    dev: true
+
+  /playwright-core/1.27.1:
+    resolution: {integrity: sha512-9EmeXDncC2Pmp/z+teoVYlvmPWUC6ejSSYZUln7YaP89Z6lpAaiaAnqroUt/BoLo8tn7WYShcfaCh+xofZa44Q==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
+
+  /playwright/1.27.1:
+    resolution: {integrity: sha512-xXYZ7m36yTtC+oFgqH0eTgullGztKSRMb4yuwLPl8IYSmgBM88QiB+3IWb1mRIC9/NNwcgbG0RwtFlg+EAFQHQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      playwright-core: 1.27.1
     dev: true
 
   /postcss-load-config/4.0.1_postcss@8.4.18:

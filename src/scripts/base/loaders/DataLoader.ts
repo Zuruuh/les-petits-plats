@@ -1,5 +1,5 @@
 export class DataLoader {
-  public async load(uri: string): Promise<void> {
+  public async load<T = any>(uri: string): Promise<T> {
     return (await fetch(uri)).json();
   }
 }

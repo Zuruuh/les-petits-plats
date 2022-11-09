@@ -83,8 +83,4 @@ export class FilterContainer extends Observable<Record<string, string[]>> {
 
     this.next({ ...this.current, ...{ [filter.label]: nextData } });
   }
-
-  public getFilters(): Filter[] {
-    return this.filters;
-  }
 }

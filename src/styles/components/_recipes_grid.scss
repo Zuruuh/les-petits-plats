@@ -1,3 +1,17 @@
 #recipes {
   margin-top: 5.5rem;
+
+  .recipe-card .card-body {
+    background-color: #e7e7e7;
+
+    .card-text > span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box !important;
+
+      /* stylelint-disable-next-line value-no-vendor-prefix */
+      -webkit-box-orient: vertical;
+      white-space: normal;
+    }
+  }
 }
