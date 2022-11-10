@@ -9,6 +9,8 @@ test('Run search benchmarks', async ({ page }) => {
     foundItems: totalFoundItems,
     ITERATIONS: iterations,
     query: usedQuery,
+    min: minTime,
+    max: maxTime,
   } = await page.evaluate(async () => {
     const { Search } = await import('../src/scripts/base/search/Search');
     const { RecipesProvider } = await import(
@@ -37,26 +39,45 @@ test('Run search benchmarks', async ({ page }) => {
       ],
     );
 
-    const startedAt = Date.now();
-
     const ITERATIONS = 100_000;
     let foundItems = 0;
     const query = 'lait coco';
+    const AVERAGE_OF = 15;
 
-    for (let i = 0; i < ITERATIONS; i++) {
-      foundItems += search.search(query).length;
+    let [min, max] = [999999999999999, 0];
+    const results = [];
+
+    for (let i = 0; i < AVERAGE_OF; i++) {
+      let start = Date.now();
+      for (let j = 0; j < ITERATIONS; j++) {
+        foundItems += search.search(query).length;
+      }
+
+      const time = Date.now() - start;
+      results.push(time);
+      min = Math.min(min, time);
+      max = Math.max(max, time);
     }
 
+    foundItems /= AVERAGE_OF;
+
     return {
-      ranFor: Date.now() - startedAt,
+      ranFor: results.reduce((prev, curr) => prev + curr, 0) / results.length,
       foundItems,
       ITERATIONS,
       query,
+      AVERAGE_OF,
+      min,
+      max,
     };
   });
 
   console.log(
-    `Search algorithm ran for ${ranForMs}ms, found a total of ${totalFoundItems} recipes for query ${usedQuery}, for a total of ${iterations} simulations!`,
+    `Search algorithm ran for an average of ${ranForMs}ms,\n` +
+      `found a total of ${totalFoundItems} recipes for query "${usedQuery}",\n` +
+      `for a total of ${iterations} simulations!\n` +
+      `Min: ${minTime}\n` +
+      `Max: ${maxTime}`,
   );
 
   expect(true).toBe(true);
