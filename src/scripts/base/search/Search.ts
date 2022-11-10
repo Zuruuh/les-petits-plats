@@ -44,15 +44,15 @@ export class Search<T extends IdentifiableObject> extends Observable<T[]> {
         this.aggregatedSearchContent[searchable.id];
 
       const match =
-        aggregatedSearchContent.some((string) => {
-          return splitQuery.every((queryPart) => string.includes(queryPart));
-        }) &&
         Object.entries(this.filterContainer.current).every(
           ([filterLabel, values]) =>
             values.every((value) =>
               this.filtersMap[filterLabel]!.apply(searchable, value),
             ),
-        );
+        ) &&
+        aggregatedSearchContent.some((string) => {
+          return splitQuery.every((queryPart) => string.includes(queryPart));
+        });
 
       if (match) {
         this.triggerFilterHooks(searchable, map);
