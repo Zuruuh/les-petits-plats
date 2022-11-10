@@ -34,7 +34,6 @@ export class Search<T extends IdentifiableObject> extends Observable<T[]> {
 
   public search(query: string): T[] {
     this.lastQuery = query;
-    const splitQuery = query.toLowerCase().split(' ');
     Object.values(this.filtersMap).forEach((filter) =>
       filter.updateOptions([]),
     );
@@ -50,10 +49,7 @@ export class Search<T extends IdentifiableObject> extends Observable<T[]> {
             Object.keys(values).every((value) =>
               this.filtersMap[filterLabel]!.apply(searchable, value),
             ),
-        ) &&
-        aggregatedSearchContent.some((string) => {
-          return splitQuery.every((queryPart) => string.includes(queryPart));
-        });
+        ) && aggregatedSearchContent.some((content) => content.includes(query));
 
       if (match) {
         this.triggerFilterHooks(searchable, map);
