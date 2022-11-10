@@ -25,12 +25,12 @@ Then, install all the npm dependencies with `pnpm install`.
 To run the project locally, use the npm script _dev_ with `pnpm run dev`, and the project will be served locally at http://localhost:5173.
 You will benefit from ViteJS Hot Module Replacement which will update all your code directly in your browser when you edit it.
 
-### Testing
+### Benchmarking
 
-Playwright is used to benchmark some of the features of this website (could be a good idea to test using it too in the future). To set it up locally, try to run the command `pnpm run playwright:install`.
+Playwright is used to benchmark some features of this website (could be a good idea to test using it too in the future). To set it up locally, try to run the command `pnpm run playwright:install`.
 If you receive an error message telling you that your os is not supported you can use the docker alternative by running `pnpm run docker:build`.
 
-Once the installation step is done, simply run `pnpm run playwright:test` (or `pnpm run docker:test` if you are using docker) and everything should be good to go!
+Once the installation step is done, simply run `pnpm run playwright:benchmark` (or `pnpm run docker:benchmark` if you are using docker) and everything should be good to go!
 
 ### Production
 
