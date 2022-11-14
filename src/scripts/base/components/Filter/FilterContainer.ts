@@ -1,8 +1,11 @@
 import { Observable } from '../../utils/Observable';
 import { Filter } from './Filter';
 import { HTMLNodeBuilder } from '../../composers/HTMLNodeBuilder';
+import { StringNormalizer } from '../../string/StringNormalizer';
 
-export class FilterContainer extends Observable<Record<string, string[]>> {
+export class FilterContainer extends Observable<
+  Record<string, Record<string, string>>
+> {
   private filters: Filter[] = [];
 
   /**
@@ -31,10 +34,10 @@ export class FilterContainer extends Observable<Record<string, string[]>> {
     this.selectedFiltersContainer.appendChild(element);
     const options = this.current;
     if (!(filter.label in options)) {
-      options[filter.label] = [];
+      options[filter.label] = {};
     }
 
-    options[filter.label].push(option);
+    options[filter.label][StringNormalizer.normalize(option)] = option;
 
     this.next(options);
   }
@@ -77,9 +80,9 @@ export class FilterContainer extends Observable<Record<string, string[]>> {
     const button = e.currentTarget as HTMLButtonElement;
     button.parentElement!.remove();
 
-    const nextData = this.current[filter.label].filter(
-      (filter) => filter !== option,
-    );
+    const nextData = Object.entries(this.current[filter.label])
+      .filter(([filterKey]) => filterKey !== StringNormalizer.normalize(option))
+      .reduce((prev, curr) => ({ ...prev, [curr[0]]: curr[1] }), {});
 
     this.next({ ...this.current, ...{ [filter.label]: nextData } });
   }

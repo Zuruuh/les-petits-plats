@@ -5,6 +5,7 @@ import type { FilterDataWithOptionProvider } from '../components/Filter/types/Fi
 import type { FilterOptionGeneratorHook } from '../components/Filter/types/FilterOptionGeneratorHook';
 import type { SearchContentAggregator } from './types/SearchContentAggregator';
 import type { IdentifiableObject } from '../types/Identifiable';
+import { StringNormalizer } from '../string/StringNormalizer';
 
 export class Search<T extends IdentifiableObject> extends Observable<T[]> {
   private lastQuery: string = '';
@@ -46,7 +47,7 @@ export class Search<T extends IdentifiableObject> extends Observable<T[]> {
       const match =
         Object.entries(this.filterContainer.current).every(
           ([filterLabel, values]) =>
-            values.every((value) =>
+            Object.keys(values).every((value) =>
               this.filtersMap[filterLabel]!.apply(searchable, value),
             ),
         ) &&
@@ -120,15 +121,15 @@ export class Search<T extends IdentifiableObject> extends Observable<T[]> {
       }
 
       options.forEach((option) => {
-        const optionKey = option
-          .toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/\W/g, '');
+        const optionKey = StringNormalizer.normalize(option);
+
+        const currentAppliedFilters = this.filterContainer?.current[label];
 
         if (!(optionKey in alreadyExistingFiltersMap[label])) {
-          alreadyExistingFiltersMap[label][optionKey] = option;
-          filter.addOption(option);
+          if (!currentAppliedFilters || !currentAppliedFilters[optionKey]) {
+            alreadyExistingFiltersMap[label][optionKey] = option;
+            filter.addOption(option);
+          }
         }
       });
     });
