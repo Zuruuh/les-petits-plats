@@ -10,7 +10,7 @@
     "playwright:benchmark": "playwright test -c playwright.config.benchmark.ts",
     "playwright:install": "playwright install",
     "docker:build": "docker build . -t les-petits-plats/node -f docker/node.dockerfile",
-    "docker:benchmark": "docker run -it --rm --ipc=host --network=host -v \"$PWD:/srv\" -u $(id -u ${USER}):$(id -g ${USER}) -w /srv les-petits-plats/node:latest pnpm run playwright:benchmark"
+    "docker:benchmark": "./scripts/benchmark-init.sh"
   },
   "author": "Younès Ziadi",
   "license": "MIT",

@@ -41,7 +41,7 @@ test('Run search benchmarks', async ({ page }) => {
 
     const ITERATIONS = 100_000;
     let foundItems = 0;
-    const query = 'lait coco';
+    const query = 'coco';
     const AVERAGE_OF = 15;
 
     let [min, max] = [999999999999999, 0];
